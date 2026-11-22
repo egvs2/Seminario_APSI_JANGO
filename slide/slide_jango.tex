@@ -1,20 +1,350 @@
-\documentclass{beamer}
-\usepackage{utf8}{inputec}
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
 
-% Tema visual e esquema de cores
-\usetheme{Madri}
-\usethemecolor{default}
+% ---------------- PALETA DE CORES (ESTILO DJANGO) ----------------
+\definecolor{djangoDark}{HTML}{092E20}    % Verde escuro institucional Django
+\definecolor{djangoMid}{HTML}{0C4B33}     % Verde médio
+\definecolor{djangoAccent}{HTML}{44B78B}  % Verde claro de destaque
+\definecolor{bgLight}{HTML}{F8FAFC}       % Fundo claro sutil
+\definecolor{textDark}{HTML}{1E293B}      % Cinza grafite para texto
+\definecolor{textMuted}{HTML}{64748B}     % Cinza suave para metadados
+\definecolor{codeBg}{HTML}{F1F5F9}        % Fundo dos blocos de código
+\definecolor{codeBorder}{HTML}{CBD5E1}    % Borda dos blocos de código
 
-%Metadados da apresentação
-\title{Jangle}
-\author{Emerson Gomes, Antony}
+% ---------------- CONFIGURAÇÃO DO TEMA ----------------
+\usetheme{default}
+\usefonttheme{professionalfonts}
+
+\setbeamercolor{normal text}{fg=textDark, bg=white}
+\setbeamercolor{structure}{fg=djangoDark}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=djangoAccent}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=codeBorder}
+\setbeamercolor{date}{fg=codeBorder}
+
+\setbeamercolor{frametitle}{fg=djangoDark, bg=white}
+\setbeamercolor{block title}{fg=white, bg=djangoMid}
+\setbeamercolor{block body}{fg=textDark, bg=bgLight}
+\setbeamercolor{item}{fg=djangoMid}
+\setbeamercolor{enumerate item}{fg=djangoMid}
+
+% Fontes e espaçamentos
+\setbeamerfont{title}{size=\Huge, series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{frametitle}{size=\Large, series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize, series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+% ---------------- CABEÇALHO E RODAPÉ ----------------
+\setbeamertemplate{frametitle}{
+  \vspace{0.35cm}
+  \begin{beamercolorbox}[wd=\textwidth, leftskip=0.2cm]{frametitle}
+    {\small\color{djangoAccent}\bfseries\insertsectionhead}\\[-2pt]
+    \insertframetitle
+  \end{beamercolorbox}
+  \vspace{0.1cm}
+  {\color{djangoAccent}\hrule height 1.2pt}
+}
+
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.75\paperwidth, ht=2.6ex, dp=1.1ex, leftskip=0.6cm]{author in head/foot}%
+      \color{textMuted}\scriptsize \insertshorttitle \quad $\cdot$ \quad \insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.25\paperwidth, ht=2.6ex, dp=1.1ex, rightskip=0.6cm]{date in head/foot}%
+      \hfill\color{djangoDark}\scriptsize\bfseries \insertframenumber{} / \inserttotalframenumber
+    \end{beamercolorbox}%
+  }%
+  \vskip2pt%
+}
+
+% ---------------- SLIDE DE CAPA PERSONALIZADO ----------------
+\setbeamertemplate{title page}{
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[djangoDark] (current page.south west) rectangle (current page.north east);
+    \fill[djangoAccent] (current page.south west) rectangle ([xshift=0.35cm]current page.north west);
+    \fill[djangoMid] ([yshift=1.4cm]current page.south west) rectangle (current page.south east);
+  \end{tikzpicture}
+  \vspace{1.2cm}
+  \begin{flushleft}
+    {\color{djangoAccent}\small\bfseries SEMINÁRIO}\\[0.25cm]
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}\\[0.2cm]
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}\\[1.2cm]
+    {\color{white}\normalsize\insertauthor}\\[0.15cm]
+    {\color{codeBorder}\small\insertinstitute}
+  \end{flushleft}
+  \vfill
+  \begin{flushright}
+    {\color{white}\footnotesize\insertdate}
+  \end{flushright}
+}
+
+% ---------------- CONFIGURAÇÃO DE CÓDIGO (LISTINGS) ----------------
+\lstset{
+  backgroundcolor=\color{codeBg},
+  basicstyle=\ttfamily\footnotesize\color{textDark},
+  keywordstyle=\color{djangoMid}\bfseries,
+  commentstyle=\color{textMuted}\itshape,
+  stringstyle=\color{teal},
+  breaklines=true,
+  frame=leftline,
+  framerule=2.5pt,
+  rulecolor=\color{djangoAccent},
+  xleftmargin=6pt,
+  framexleftmargin=6pt,
+  language=Python,
+  showstringspaces=false,
+  tabsize=4
+}
+
+% ---------------- METADADOS ----------------
+\title{Django}
+\subtitle{Framework web em Python + CRUD na prática}
+\author{Emerson Gomes \quad $\cdot$ \quad Entony \quad $\cdot$ \quad Guilherme \quad $\cdot$ \quad Matheus}
 \institute{Instituto Federal de Alagoas}
+\date{\today}
 
 \begin{document}
-%Título do slide
-\begin{frame}
-    \pagetitle
+
+% Capa (sem cabeçalho/rodapé)
+{
+\setbeamertemplate{footline}{}
+\begin{frame}[plain]
+  \titlepage
 \end{frame}
+}
+
+% ---------------- ROTEIRO ----------------
+\section{Apresentação}
+\begin{frame}{Roteiro do Seminário}
+  \vspace{0.2cm}
+  \begin{enumerate}
+    \setlength\itemsep{0.6em}
+    \item \textbf{O que é o Django?} --- Conceitos, história e vantagens
+    \item \textbf{Arquitetura MVT} --- Como o framework organiza a aplicação
+    \item \textbf{Instalação e Estrutura} --- Criando um projeto do zero
+    \item \textbf{CRUD na Prática} --- Lista de tarefas passo a passo
+    \item \textbf{Demonstração e Conclusão} --- Aplicação funcionando
+  \end{enumerate}
+\end{frame}
+
+% ---------------- PESSOA 1 ----------------
+\section{Introdução}
+
+\begin{frame}{O que é o Django?}
+  \begin{itemize}
+    \setlength\itemsep{0.55em}
+    \item Framework web de alto nível escrito em \textbf{Python}.
+    \item Criado em 2005 e adotado por plataformas como \textbf{Instagram}, \textbf{Pinterest} e \textbf{Spotify}.
+    \item Segue a filosofia \textbf{DRY} (\textit{Don't Repeat Yourself}).
+    \item Abordagem \textit{"Batteries Included"}: já traz painel administrativo, autenticação, ORM e segurança.
+    \item Gratuito, maduro e de código aberto (\textit{open source}).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Por que escolher o Django?}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \begin{block}{Produtividade e Escala}
+      \begin{itemize}
+        \item Desenvolvimento ágil com menos código repetitivo.
+        \item Escala de protótipos rápidos a sistemas de alto tráfego.
+        \item Sintaxe limpa e legível do Python.
+      \end{itemize}
+    \end{block}
+
+    \column{0.48\textwidth}
+    \begin{block}{Segurança e Ecossistema}
+      \begin{itemize}
+        \item Proteção nativa contra \textbf{SQL Injection}, \textbf{CSRF} e \textbf{XSS}.
+        \item Documentação oficial extensa e didática.
+        \item Grande comunidade e pacotes prontos.
+      \end{itemize}
+    \end{block}
+  \end{columns}
+\end{frame}
+
+% ---------------- PESSOA 2 ----------------
+\section{Arquitetura MVT}
+
+\begin{frame}{Arquitetura MVT}
+  O Django adota o padrão \textbf{MVT} (\textit{Model -- View -- Template}):
+  \vspace{0.3cm}
+
+  \begin{columns}[T]
+    \column{0.31\textwidth}
+    \begin{block}{Model}
+      Define a estrutura dos dados e comunica-se com o banco via ORM.\\[4pt]
+      \footnotesize\textit{Ex.: classe \texttt{Tarefa}}
+    \end{block}
+
+    \column{0.31\textwidth}
+    \begin{block}{View}
+      Contém a regra de negócio: recebe a requisição HTTP e devolve a resposta.\\[4pt]
+      \footnotesize\textit{Ex.: funções \texttt{listar}, \texttt{criar}}
+    \end{block}
+
+    \column{0.31\textwidth}
+    \begin{block}{Template}
+      Camada de apresentação em HTML dinâmico exibida ao usuário.\\[4pt]
+      \footnotesize\textit{Ex.: \texttt{listar.html}}
+    \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Estrutura de um Projeto Django}
+  \begin{columns}[c]
+    \column{0.45\textwidth}
+\begin{lstlisting}
+meu_projeto/
+  manage.py
+  meu_projeto/
+    settings.py
+    urls.py
+  tarefas/
+    models.py
+    views.py
+    urls.py
+    templates/
+\end{lstlisting}
+
+    \column{0.50\textwidth}
+    \begin{itemize}
+      \setlength\itemsep{0.5em}
+      \item \texttt{manage.py}: utilitário de linha de comando.
+      \item \texttt{settings.py}: configurações globais e banco de dados.
+      \item \texttt{urls.py}: mapeamento de rotas da aplicação.
+      \item \texttt{tarefas/}: aplicativo modular com lógica própria.
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+% ---------------- PESSOA 3 ----------------
+\section{Configuração}
+
+\begin{frame}[fragile]{Instalação e Criação do Projeto}
+\begin{lstlisting}
+# 1. Criar e ativar o ambiente virtual
+python -m venv venv
+source venv/bin/activate
+
+# 2. Instalar o Django
+pip install django
+
+# 3. Iniciar o projeto, criar o app e rodar o servidor
+django-admin startproject meu_projeto
+cd meu_projeto
+python manage.py startapp tarefas
+python manage.py runserver
+\end{lstlisting}
+\end{frame}
+
+% ---------------- PESSOA 4 ----------------
+\section{CRUD na Prática}
+
+\begin{frame}{Nosso CRUD: Lista de Tarefas}
+  Implementação das quatro operações básicas sobre o modelo \textbf{Tarefa}:
+  \vspace{0.3cm}
+
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \begin{block}{\textbf{C}reate \& \textbf{R}ead}
+      \begin{itemize}
+        \item \textbf{Create:} cadastrar nova tarefa via formulário.
+        \item \textbf{Read:} consultar e listar tarefas cadastradas.
+      \end{itemize}
+    \end{block}
+
+    \column{0.48\textwidth}
+    \begin{block}{\textbf{U}pdate \& \textbf{D}elete}
+      \begin{itemize}
+        \item \textbf{Update:} editar título ou marcar como concluída.
+        \item \textbf{Delete:} remover tarefa do banco de dados.
+      \end{itemize}
+    \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{1. Model --- \texttt{models.py}}
+\begin{lstlisting}
+from django.db import models
+
+class Tarefa(models.Model):
+    titulo = models.CharField(max_length=100)
+    concluida = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.titulo
+\end{lstlisting}
+  \vspace{0.2cm}
+  \small\color{textMuted} O ORM do Django converte essa classe Python diretamente em uma tabela no banco de dados.
+\end{frame}
+
+\begin{frame}[fragile]{2. View --- \texttt{views.py}}
+\begin{lstlisting}
+from django.shortcuts import render, redirect
+from .models import Tarefa
+
+def listar(request):
+    tarefas = Tarefa.objects.all()
+    return render(request, 'listar.html', {'tarefas': tarefas})
+
+def criar(request):
+    if request.method == 'POST':
+        Tarefa.objects.create(titulo=request.POST['titulo'])
+        return redirect('listar')
+    return render(request, 'criar.html')
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{3. Rotas --- \texttt{urls.py}}
+\begin{lstlisting}
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.listar, name='listar'),
+    path('criar/', views.criar, name='criar'),
+    path('editar/<int:id>/', views.editar, name='editar'),
+    path('excluir/<int:id>/', views.excluir, name='excluir'),
+]
+\end{lstlisting}
+\end{frame}
+
+% ---------------- ENCERRAMENTO ----------------
+\section{Encerramento}
+
+\begin{frame}{Demonstração ao Vivo}
+  \begin{center}
+    \vspace{0.6cm}
+    {\Huge\bfseries\color{djangoDark} Hora da Demonstração!}\\[0.5cm]
+    {\large\color{textMuted} Execução no navegador do fluxo completo:}\\[0.4cm]
+    {\large\bfseries\color{djangoMid} Criar \quad $\rightarrow$ \quad Listar \quad $\rightarrow$ \quad Editar \quad $\rightarrow$ \quad Excluir}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Conclusão}
+  \begin{itemize}
+    \setlength\itemsep{0.55em}
+    \item O Django acelera o desenvolvimento web sem abrir mão da organização.
+    \item A arquitetura \textbf{MVT} separa claramente dados, regras de negócio e interface.
+    \item Com poucas linhas de código é possível construir um CRUD seguro e funcional.
+    \item Excelente escolha tanto para aprendizado quanto para aplicações em produção.
+  \end{itemize}
+  \vspace{0.6cm}
+  \begin{center}
+    {\Large\bfseries\color{djangoDark} Obrigado! Perguntas?}
+  \end{center}
+\end{frame}
+
 \end{document}
