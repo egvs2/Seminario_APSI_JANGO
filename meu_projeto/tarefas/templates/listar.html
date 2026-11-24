@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Tarefas</title>
+</head>
+<body>
+  <h1>Lista de Tarefas</h1>
+  <a href="{% url 'criar' %}">+ Nova tarefa</a>
+
+  <ul>
+    {% for tarefa in tarefas %}
+      <li>
+        {% if tarefa.concluida %}
+          <s>{{ tarefa.titulo }}</s> (Concluída)
+        {% else %}
+          {{ tarefa.titulo }} (Pendente)
+        {% endif %}
+        — <a href="{% url 'editar' tarefa.id %}">Editar</a>
+        — <a href="{% url 'excluir' tarefa.id %}">Excluir</a>
+      </li>
+    {% empty %}
+      <li>Nenhuma tarefa cadastrada ainda.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

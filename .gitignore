@@ -1,1 +1,35 @@
 build/
+
+# Ambiente virtual
+venv/
+.venv/
+env/
+
+# Python cache e bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Banco de dados local e mídia de desenvolvimento
+*.sqlite3
+db.sqlite3
+/media/
+/staticfiles/
+
+# Variáveis de ambiente e segredos
+.env
+.env.*
+
+# IDEs e editores (VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operacional (Linux / macOS / Windows)
+*~
+.DS_Store
+Thumbs.db
